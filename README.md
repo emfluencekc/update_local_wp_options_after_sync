@@ -36,19 +36,19 @@ COLOR_RESET='\033[0m'
 ssh $REMOTE_SERVER "cd $REMOTE_PATH && 
     mysqldump -u $REMOTE_USER_NAME --password=\"$REMOTE_MYSQL_PASSWORD\" -h $REMOTE_HOST_NAME --port=$REMOTE_PORT $REMOTE_DB_NAME > $FILE_NAME";
 
-echo -e "${COLOR_YELLOW}$LINE\nArchived database${COLOR_RESET}\n";
+echo "${COLOR_YELLOW}$LINE\nArchived database${COLOR_RESET}\n";
 
 scp $REMOTE_SERVER:$REMOTE_PATH/$FILE_NAME .;
 
-echo -e "${COLOR_YELLOW}$LINE\nCopied $FILE_NAME from $REMOTE_SITE_NAME to $LOCAL_PATH${COLOR_RESET}\n";
+echo "${COLOR_YELLOW}$LINE\nCopied $FILE_NAME from $REMOTE_SITE_NAME to $LOCAL_PATH${COLOR_RESET}\n";
 
 ssh $REMOTE_SERVER "cd $REMOTE_PATH && rm $FILE_NAME";
 
-echo -e "${COLOR_YELLOW}$LINE\nDeleted $FILE_NAME from $REMOTE_SITE_NAME${COLOR_RESET}\n";
+echo "${COLOR_YELLOW}$LINE\nDeleted $FILE_NAME from $REMOTE_SITE_NAME${COLOR_RESET}\n";
 
 lando db-import $FILE_NAME;
 
-echo -e "${COLOR_YELLOW}$LINE\nImported $FILE_NAME into local database${COLOR_RESET}\n";
+echo "${COLOR_YELLOW}$LINE\nImported $FILE_NAME into local database${COLOR_RESET}\n";
 
 # Download the script to update wp_options table, change permissions, and navigate to it
 git clone https://github.com/emfluencekc/update_local_wp_options_after_sync.git;
@@ -62,5 +62,5 @@ php update_local_wp_options_after_sync.php --from=$REMOTE_SITE_NAME --to=$LOCAL_
 cd ..;
 rm -r update_local_wp_options_after_sync;
 
-echo -e "${COLOR_YELLOW}\n$LINE\nUpdated the wp_options table by replacing all references of $REMOTE_SITE_NAME with $LOCAL_SITE_NAME${COLOR_RESET}\n";
+echo "${COLOR_YELLOW}\n$LINE\nUpdated the wp_options table by replacing all references of $REMOTE_SITE_NAME with $LOCAL_SITE_NAME${COLOR_RESET}\n";
 ```
