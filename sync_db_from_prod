@@ -4,6 +4,7 @@
 LINE="\n#############"
 COLOR_YELLOW='\033[0;33m'
 COLOR_RESET='\033[0m'
+FILE_NAME=$(date '+%Y-%m-%d-%H-%M-%S'_archive.sql)
 
 # SSH into remote server and archive database
 ssh $REMOTE_SERVER "cd $REMOTE_PATH && 
