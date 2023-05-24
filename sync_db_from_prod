@@ -22,10 +22,10 @@ ssh $REMOTE_SERVER "cd $REMOTE_PATH && rm $FILE_NAME";
 
 echo "${COLOR_YELLOW}$LINE\nDeleted $FILE_NAME from $REMOTE_SITE_NAME${COLOR_RESET}\n";
 
-wp db import $FILE_NAME;
+wp db import --allow-root $FILE_NAME;
 
 echo "${COLOR_YELLOW}$LINE\nImported $FILE_NAME into local database${COLOR_RESET}\n";
 
-wp search-replace --all-tables $REMOTE_SITE_NAME $LOCAL_SITE_NAME
+wp search-replace --all-tables --allow-root $REMOTE_SITE_NAME $LOCAL_SITE_NAME
 
 echo "${COLOR_YELLOW}\n$LINE\nUpdated the wp_options table by replacing all references of $REMOTE_SITE_NAME with $LOCAL_SITE_NAME${COLOR_RESET}\n";
